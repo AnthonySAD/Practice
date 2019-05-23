@@ -6,6 +6,12 @@
  * Time: 9:22
  */
 
+
+/**
+ * Class Bubble
+ * 冒泡排序的时间复杂度为f(O2),哪怕再优化,面对无序度很高的数据时,性能还是非常差
+ * 经测试,优化后的冒泡排序,运行时间仅减少了4%左右
+ */
 class Bubble
 {
 
@@ -84,5 +90,19 @@ class Bubble
         }
 
         return $numbers;
+    }
+
+    public static function sort4(array $numbers)
+    {
+        //双向冒泡排序,也叫做鸡尾酒排序
+        $length = count($numbers);
+        $isSorted = false;
+        for ($i = 0; $i < $length; $i ++)
+        {
+            if ($isSorted)
+            {
+
+            }
+        }
     }
 }

@@ -9,13 +9,14 @@
 require_once 'BubbleSort/Bubble.php';
 $solution = new Solution($argv[1], $argv[2], $argv[3]);
 
-echo $solution->question;
 echo $solution->bubble_sort1;
+echo $solution->bubble_sort3;
 
 class Solution
 {
     private $numbers;
-    public $question;
+    public $question = '';
+    public $printArray = false;
 
     public function __construct($total, $min, $max)
     {
@@ -56,10 +57,12 @@ class Solution
 
     private function toString($method, $ans, $runTime)
     {
-        $str = 'Use the '.$method[0].' method in the '.$method[1].' class,';
+        $str = 'Use the '.$method[1].' method in the '.$method[0].' class,';
         $str .= 'run time is '.$this->toFloat($runTime).' s'.PHP_EOL;
-        $str .= 'the answer is: '.PHP_EOL;
-        $str .= '['.implode(',', $ans).']'.PHP_EOL;
+        if ($this->printArray){
+            $str .= 'the answer is: '.PHP_EOL;
+            $str .= '['.implode(',', $ans).']'.PHP_EOL;
+        }
 
         return $str;
     }
@@ -68,12 +71,10 @@ class Solution
     {
         if (false !== stripos((string)$num, "E")) {
             $a = explode("e", strtolower((string)$num));
-            $b=bcmul($a[0], bcpow((string)10, (string)$a[1], $double), $double);
-            $b=$b?$b:0;
+            return bcmul($a[0], bcpow((string)10, (string)$a[1], $double), $double);
         }else{
-            $b=0;
+            return $num;
         }
-        return $b;
     }
 
 }
