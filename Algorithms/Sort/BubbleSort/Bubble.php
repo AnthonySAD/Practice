@@ -10,7 +10,7 @@
 /**
  * Class Bubble
  * 冒泡排序的时间复杂度为f(O2),哪怕再优化,面对无序度很高的数据时,性能还是非常差
- * 经测试,优化后的冒泡排序,运行时间仅减少了4%左右
+ * 经测试,优化后的冒泡排序,运行时间仅减少了10%左右
  */
 class Bubble
 {
@@ -92,17 +92,52 @@ class Bubble
         return $numbers;
     }
 
+    //双向冒泡排序,也叫做鸡尾酒排序
     public static function sort4(array $numbers)
     {
-        //双向冒泡排序,也叫做鸡尾酒排序
         $length = count($numbers);
-        $isSorted = false;
-        for ($i = 0; $i < $length; $i ++)
+        $halfLength = floor($length / 2);
+        for ($i = 0; $i < $halfLength; $i ++)
         {
+            $isSorted = true;
+
+            for ($j = $i; $j < $length - 1 - $i; $j ++)
+            {
+                if ($numbers[$j] > $numbers[$j + 1])
+                {
+                    $isSorted = false;
+                    $temp = $numbers[$j];
+                    $numbers[$j] = $numbers[$j + 1];
+                    $numbers[$j + 1] = $temp;
+                }
+            }
+
             if ($isSorted)
             {
+                return $numbers;
+            }
+
+            $isSorted = true;
+
+            for ($j = $length - $i - 1; $j > $i; $j --)
+            {
+
+                if ($numbers[$j] < $numbers[$j - 1])
+                {
+                    $isSorted = false;
+                    $temp = $numbers[$j];
+                    $numbers[$j] = $numbers[$j - 1];
+                    $numbers[$j - 1] = $temp;
+                }
 
             }
+
+            if ($isSorted)
+            {
+                return $numbers;
+            }
+
         }
+        return $numbers;
     }
 }

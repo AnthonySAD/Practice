@@ -11,12 +11,14 @@ $solution = new Solution($argv[1], $argv[2], $argv[3]);
 
 echo $solution->bubble_sort1;
 echo $solution->bubble_sort3;
+echo $solution->bubble_sort4;
 
 class Solution
 {
     private $numbers;
     public $question = '';
     public $printArray = false;
+    public $answer = [];
 
     public function __construct($total, $min, $max)
     {
@@ -31,6 +33,7 @@ class Solution
 
         $this->numbers = $this->randomIntArr($total, $min, $max);
         $this->question = 'The question is: ['.implode(',', $this->numbers).']'.PHP_EOL;
+
     }
 
     public function __get($name)
@@ -40,8 +43,22 @@ class Solution
         $ans = call_user_func($method, $this->numbers);
         $endTime = microtime(true);
         $runTime = $endTime - $startTime;
-
+        $ans = $this->arrToString($ans);
+        $this->checkAndStoreAnswer($name, $ans);
         return $this->toString($method, $ans, $runTime);
+    }
+
+    private function checkAndStoreAnswer($name, $ans)
+    {
+        if (!empty($this->answer))
+        {
+            if ($this->answer[0] !== $ans)
+            {
+                echo 'Answer of '. $name . ' is different from first answer!'.PHP_EOL;
+            }
+        }
+
+        $this->answer[] = $ans;
     }
 
     private function randomIntArr($total, $min, $max)
@@ -55,13 +72,18 @@ class Solution
         return $numbers;
     }
 
+    private function arrToString(array $arr)
+    {
+        return '['.implode(',', $arr).']'.PHP_EOL;
+    }
+
     private function toString($method, $ans, $runTime)
     {
         $str = 'Use the '.$method[1].' method in the '.$method[0].' class,';
         $str .= 'run time is '.$this->toFloat($runTime).' s'.PHP_EOL;
         if ($this->printArray){
             $str .= 'the answer is: '.PHP_EOL;
-            $str .= '['.implode(',', $ans).']'.PHP_EOL;
+            $str .= $ans;
         }
 
         return $str;
