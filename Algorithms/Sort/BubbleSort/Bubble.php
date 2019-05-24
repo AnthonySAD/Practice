@@ -140,4 +140,12 @@ class Bubble
         }
         return $numbers;
     }
+
+    //优化双向冒泡排序
+    public static function sort5(array $numbers)
+    {
+        $length = count($numbers);
+        $halfLength = floor($length / 2);
+//        for ($i = 0; $i < $length; $i)
+    }
 }
