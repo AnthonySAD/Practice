@@ -9,6 +9,7 @@
 require_once 'Bubble/Bubble.php';
 require_once 'Insertion/Insertion.php';
 require_once 'Selection/Selection.php';
+require_once 'Merge/Merge.php';
 
 
 $total = isset($argv[1]) ? $argv[1] : 10;
@@ -17,11 +18,12 @@ $max = isset($argv[3]) ? $argv[3] : 50;
 
 $solution = new Solution($total, $min, $max);
 // echo $solution->question;
-echo $solution->Bubble_sort1;
+//echo $solution->Bubble_sort1;
 // echo $solution->Bubble_sort4;
-//echo $solution->Bubble_sort5;
-echo $solution->Insertion_sort1;
-echo $solution->Selection_sort1;
+echo $solution->Bubble_sort5;
+//echo $solution->Insertion_sort1;
+//echo $solution->Selection_sort1;
+echo $solution->Merge_sort1;
 
 class Solution
 {
