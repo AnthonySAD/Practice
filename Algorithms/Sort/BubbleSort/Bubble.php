@@ -10,11 +10,10 @@
 /**
  * Class Bubble
  * 冒泡排序的时间复杂度为f(O2),哪怕再优化,面对无序度很高的数据时,性能还是非常差
- * 经测试,优化后的冒泡排序,运行时间仅减少了10%左右
+ * 经测试,优化后的冒泡排序(sort5),运行时间减少了20%左右,但数据量多的话,性能还是太差
  */
 class Bubble
 {
-
     public static function sort1(array $numbers)
     {
         $length = count($numbers);
@@ -146,6 +145,46 @@ class Bubble
     {
         $length = count($numbers);
         $halfLength = floor($length / 2);
-//        for ($i = 0; $i < $length; $i)
+        $leftSorted = -1;
+        $rightSorted = $length;
+
+        while($leftSorted < $rightSorted - 1)
+        {
+            $tempRightSorted = false;
+            for ($i = $leftSorted + 1; $i < $rightSorted - 1; $i ++)
+            {
+                if ($numbers[$i] > $numbers[$i + 1])
+                {
+                    $tempRightSorted = $i + 1;
+                    $temp = $numbers[$i];
+                    $numbers[$i] = $numbers[$i + 1];
+                    $numbers[$i + 1] = $temp;
+                }
+            }
+            if ($tempRightSorted === false)
+            {
+                return $numbers;
+            }
+            $rightSorted = $tempRightSorted;
+
+            $tempLeftSorted = false;
+            for ($i = $rightSorted - 1; $i > $leftSorted + 1; $i --)
+            {
+                if ($numbers[$i] < $numbers[$i - 1])
+                {
+                    $tempLeftSorted = $i - 1;
+                    $temp = $numbers[$i];
+                    $numbers[$i] = $numbers[$i - 1];
+                    $numbers[$i - 1] = $temp;
+                }
+            }
+            if ($tempRightSorted === false)
+            {
+                return $numbers;
+            }
+            $leftSorted = $tempLeftSorted;
+        }
+
+        return $numbers;
     }
 }

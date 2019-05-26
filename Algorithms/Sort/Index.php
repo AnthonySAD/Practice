@@ -7,11 +7,15 @@
  */
 
 require_once 'BubbleSort/Bubble.php';
-$solution = new Solution($argv[1], $argv[2], $argv[3]);
+$total = isset($argv[1]) ? $argv[1] : 10;
+$min = isset($argv[2]) ? $argv[2] : 0;
+$max = isset($argv[3]) ? $argv[3] : 50;
 
+$solution = new Solution($total, $min, $max);
+// echo $solution->question;
 echo $solution->bubble_sort1;
-echo $solution->bubble_sort3;
-echo $solution->bubble_sort4;
+// echo $solution->bubble_sort4;
+echo $solution->bubble_sort5;
 
 class Solution
 {
@@ -22,18 +26,8 @@ class Solution
 
     public function __construct($total, $min, $max)
     {
-        $total = $total ? $total : 10;
-        $min = $min ? $min : 0;
-        $max = $max ? $max : 50;
-
-        if ($total < 2){
-            echo 'invalid argument';
-            die();
-        }
-
         $this->numbers = $this->randomIntArr($total, $min, $max);
-        $this->question = 'The question is: ['.implode(',', $this->numbers).']'.PHP_EOL;
-
+        $this->question = 'The question is: '.PHP_EOL.'['.implode(',', $this->numbers).']'.PHP_EOL;
     }
 
     public function __get($name)
