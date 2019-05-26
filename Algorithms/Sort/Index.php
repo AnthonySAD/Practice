@@ -6,8 +6,9 @@
  * Time: 9:20
  */
 
-require_once 'BubbleSort/Bubble.php';
+require_once 'Bubble/Bubble.php';
 require_once 'Insertion/Insertion.php';
+require_once 'Selection/Selection.php';
 
 
 $total = isset($argv[1]) ? $argv[1] : 10;
@@ -20,6 +21,7 @@ echo $solution->Bubble_sort1;
 // echo $solution->Bubble_sort4;
 //echo $solution->Bubble_sort5;
 echo $solution->Insertion_sort1;
+echo $solution->Selection_sort1;
 
 class Solution
 {
