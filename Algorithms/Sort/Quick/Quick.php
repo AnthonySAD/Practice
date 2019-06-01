@@ -11,18 +11,21 @@ class Quick
     public static function sort1(array $numbers)
     {
         $length = count($numbers);
-        $start = 0;
-        $end = $length - 1;
 
-        self::sort1_splite($numbers, $start, $end);
+        self::sort1_splite($numbers, 0, $length - 1);
 
         return $numbers;
 
     }
 
-    private static function sort1_getPoint($numbers, $start, $end)
+    public static function sort2(array $numbers)
     {
-        return $start;
+        $length = count($numbers);
+
+        self::sort2_splite($numbers, 0, $length - 1);
+
+        return $numbers;
+
     }
 
     private static function sort1_splite(&$numbers, $start, $end)
@@ -31,32 +34,58 @@ class Quick
             return;
         }
 
-        $point = self::sort1_getPoint($numbers, $start, $end);
+        $mark = $numbers[$start];
+        $left = $start;
+        $right = $end;
 
-        $mark = $numbers[$point];
-
-        $numbers[$point] = $numbers[$start];
-
-        $rightStart = $start + 1;
-        $rightEnd = $end;
-
-        for ($i = $start + 1; $i <= $end; $i ++)
-        {
-            if ($numbers[$rightStart] > $mark){
-                $temp = $numbers[$rightStart];
-                $numbers[$rightStart] = $numbers[$rightEnd];
-                $numbers[$rightEnd] = $temp;
-                $rightEnd --;
+        while($left < $right){
+            if($numbers[$right] >$mark){
+                $right --;
+            }elseif($numbers[$left] <= $mark){
+                $left ++;
             }else{
-                $rightStart ++;
+                $temp = $numbers[$left];
+                $numbers[$left] = $numbers[$right];
+                $numbers[$right] = $temp;
             }
         }
-        $middle = $rightStart - 1;
-        $numbers[$start] = $numbers[$middle];
-        $numbers[$middle] = $mark;
+        $numbers[$start] = $numbers[$left];
+        $numbers[$left] = $mark;
 
-        self::sort1_splite($numbers, $start, $middle - 1);
-        self::sort1_splite($numbers, $middle + 1, $end);
+        self::sort1_splite($numbers, $start, $left - 1);
+        self::sort1_splite($numbers, $left + 1, $end);
+
+    }
+
+    private static function sort2_splite(&$numbers, $start, $end)
+    {
+        if ($start >= $end){
+            return;
+        }
+
+        $mark = $numbers[$start];
+        $left = $start;
+        $right = $end;
+
+        while($left != $right){
+            while($left < $right && $numbers[$right] > $mark){
+                $right --;
+            }
+            while($left < $right && $numbers[$left] <= $mark){
+                $left ++;
+            }
+            
+            if($left < $right){
+                $temp = $numbers[$left];
+                $numbers[$left] = $numbers[$right];
+                $numbers[$right] = $temp;
+            }
+        }
+       
+        $numbers[$start] = $numbers[$left];
+        $numbers[$left] = $mark;
+        self::sort1_splite($numbers, $start, $left - 1);
+        self::sort1_splite($numbers, $left + 1, $end);
 
     }
 

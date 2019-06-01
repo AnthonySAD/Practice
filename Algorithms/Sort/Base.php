@@ -6,38 +6,25 @@
  * Time: 9:20
  */
 
-require_once 'Bubble/Bubble.php';
-require_once 'Insertion/Insertion.php';
-require_once 'Selection/Selection.php';
-require_once 'Merge/Merge.php';
-require_once 'Quick/Quick.php';
-
-
-$total = isset($argv[1]) ? $argv[1] : 10;
-$min = isset($argv[2]) ? $argv[2] : 0;
-$max = isset($argv[3]) ? $argv[3] : 50;
-
-$solution = new Solution($total, $min, $max);
-// echo $solution->question;
-//echo $solution->Bubble_sort1;
-// echo $solution->Bubble_sort4;
-//echo $solution->Bubble_sort5;
-//echo $solution->Insertion_sort1;
-//echo $solution->Selection_sort1;
-echo $solution->Merge_sort1;
-echo $solution->Quick_sort1;
-
-class Solution
+class Base
 {
     private $numbers;
-    public $question = '';
-    public $printArray = false;
+    public $echoArray;
     public $answer = [];
 
-    public function __construct($total, $min, $max)
+    public function __construct($total, $min, $max, $echoArray)
     {
         $this->numbers = $this->randomIntArr($total, $min, $max);
-        $this->question = 'The question is: '.PHP_EOL.'['.implode(',', $this->numbers).']'.PHP_EOL;
+        $this->echoArray = $echoArray;
+        if ($this->echoArray){
+            echo 'The question is: '.PHP_EOL.'['.implode(',', $this->numbers).']'.PHP_EOL;
+        }
+    }
+
+    public static function sort1($numbers)
+    {
+        sort($numbers);
+        return $numbers;
     }
 
     public function __get($name)
@@ -49,7 +36,7 @@ class Solution
         $runTime = $endTime - $startTime;
         $ans = $this->arrToString($ans);
         $this->checkAndStoreAnswer($name, $ans);
-        return $this->toString($method, $ans, $runTime);
+        echo $this->toString($method, $ans, $runTime);
     }
 
     private function checkAndStoreAnswer($name, $ans)
@@ -85,7 +72,7 @@ class Solution
     {
         $str = 'Use the '.$method[1].' method in the '.$method[0].' class,';
         $str .= 'run time is '.$this->toFloat($runTime).' s'.PHP_EOL;
-        if ($this->printArray){
+        if ($this->echoArray){
             $str .= 'the answer is: '.PHP_EOL;
             $str .= $ans;
         }
